@@ -4,4 +4,4 @@ project(gallows C)
 set(CMAKE_C_STANDARD 11)
 
 add_executable(gallows
-        main.c)
+        main.c gallows_painter.c gallows_painter.h config.h)

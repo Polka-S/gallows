@@ -4,4 +4,4 @@ project(gallows C)
 set(CMAKE_C_STANDARD 11)
 
 add_executable(gallows
-        main.c)
+        main.c word_base.c word_base.h)

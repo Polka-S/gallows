@@ -1,0 +1,5 @@
+#ifndef GALLOWS_WORD_BASE_H
+#define GALLOWS_WORD_BASE_H
+
+
+#endif //GALLOWS_WORD_BASE_H

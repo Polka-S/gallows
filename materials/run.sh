@@ -5,7 +5,8 @@ cp linters/.clang-format ../include/.clang-format
 
 clang-format ../include/*.h ../src/*.c -i
 
-cppcheck --enable=all --suppress=missingIncludeSystem ../include/*.h ../src/*.c
+cppcheck --enable=all --suppress=missingIncludeSystem -I ../include ../src
+
 
 cd ../
 make clean

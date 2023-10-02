@@ -1,8 +1,6 @@
 #include "logger.h"
 
-static Logger *logger;
-
-Logger *get_logger() { return logger; }
+static Logger *logger = NULL;
 
 const char *get_current_datetime() {
     static char time_string[20];

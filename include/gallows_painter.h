@@ -6,6 +6,8 @@
 #include <string.h>
 
 #include "config.h"
+#include "logger.h"
+#include "log_levels.h"
 
 #define MAX_PARAMETER_LEN 64
 #define MAX_PARAMETER_LEN_STR "64"

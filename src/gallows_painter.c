@@ -16,7 +16,7 @@ void read_parameters(FILE *gallows_states_file, int *states_amount_arg, int *sta
     char parameter[MAX_PARAMETER_LEN];
 
     for (int i = 0; i < 2; i++) {
-        fscanf(gallows_states_file, "%s", parameter);
+        fscanf(gallows_states_file, "%" MAX_PARAMETER_LEN_STR "s", parameter);
         if (strcmp(parameter, "STATES_AMOUNT") == 0) {
             fscanf(gallows_states_file, "%d", &states_amount);
         }
@@ -51,8 +51,9 @@ void skip_states(FILE *gallows_states_file, int states_to_skip, int state_height
 }
 
 void print_one_state(FILE *gallows_states_file, int state_height) {
-    char *estr, string[MAX_STRING_LEN];
+    char string[MAX_STRING_LEN];
     for (int i = 0; i < state_height; i++) {
+        char *estr;
         estr = fgets(string, MAX_STRING_LEN, gallows_states_file);
 
         if (!estr) {

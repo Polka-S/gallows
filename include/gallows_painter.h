@@ -8,6 +8,7 @@
 #include "config.h"
 
 #define MAX_PARAMETER_LEN 64
+#define MAX_PARAMETER_LEN_STR "64"
 #define MAX_STRING_LEN 64
 #define LEFT_MARGIN "     "
 

@@ -5,6 +5,7 @@ int is_alpha(char ch) { return (('A' <= ch && ch <= 'Z') || ('a' <= ch && ch <= 
 void print_try_again() { printf("Try again: "); }
 void print_fail() { printf("This letter is not in the word\n"); }
 void print_success() { printf("\nYou guessed the letter!\n"); }
+
 void print_str(char *str) {
     for (int i = 0; str[i] != '\0'; i++) {
         printf("%c", str[i]);
@@ -48,11 +49,9 @@ int check_valid_input(char *ch) {
     return i == 0 ? ERROR : SUCCESS;
 }
 
-// user_word - массив символов, которые пользователь уже угадал
-
-void answer(char *finish_word, char *user_word) {
+void answer(const char *finish_word, char *user_word, int *count_attempts) {
     char finish_char;
-    int error_code = check_valid_input(&finish_char);
+    int error_code = check_valid_input(&finish_char), flag_replay_symbol = FALSE;
     while (error_code) {
         print_try_again();
         error_code = check_valid_input(&finish_char);
@@ -61,16 +60,26 @@ void answer(char *finish_word, char *user_word) {
     int count_replace = 0;
 
     for (int i = 0; finish_word[i] != '\0'; i++) {
+        if (finish_char == finish_word[i] && user_word[i] != '_') {
+            flag_replay_symbol = TRUE;
+        }
+
         if (finish_char == finish_word[i]) {
             user_word[i] = finish_char;
             count_replace++;
         }
     }
 
-    if (!count_replace)
-        print_fail();
-    else {
-        print_success();
-        print_str(user_word);
+    if (flag_replay_symbol == FALSE) {
+        if (!count_replace) {
+            (*count_attempts)--;
+            print_fail();
+            printf("\nNow you have a %d attempts\n", *count_attempts);
+        } else {
+            print_success();
+            print_str(user_word);
+        }
+    } else {
+        printf("You have already guessed this letter.");
     }
 }

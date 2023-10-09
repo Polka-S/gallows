@@ -1,6 +1,8 @@
 #include "welcome.h"
 
-void print_welcome() { printf("Hi! Enter your username and select game mode"); }
+#include <unistd.h>
+
+void print_welcome() { printf("Hi! Enter your username and select game mode\n"); }
 
 void enter_username() { printf("Username: "); }
 
@@ -9,20 +11,23 @@ void enter_game_mode() {
     printf("1 - easy mode\n");
     printf("2 - medium mode\n");
     printf("3 - hard mode\n");
-    printf("Enter a number:");
+    printf("Enter a number: ");
+}
+
+void print_try_again_welcome() { printf("I don't understand. Try again: "); }
+
+void add_char_to_str(char *str, int ch, int *len) {
+    str[*len] = (char)ch;
+    (*len)++;
 }
 
 int input(char *str) {
     int ch = getchar(), i = 0;
-    if ((char)ch != ' ' && (char)ch != '\n') add_char_to_str(str, ch, i);
+    if ((char)ch != ' ' && (char)ch != '\n') add_char_to_str(str, ch, &i);
 
     while (ch != '\n') {
-        if ((char)ch == ' ') {
-            ch = getchar();
-            continue;
-        }
-        add_char_to_str(str, ch, i);
         ch = getchar();
+        if ((char)ch != ' ' && (char)ch != '\n') add_char_to_str(str, ch, &i);
     }
 
     if (i == 0) return ERROR;
@@ -30,41 +35,43 @@ int input(char *str) {
     return SUCCESS;
 }
 
-void add_char_to_str(char *str, int ch, int *len) {
-    str[*len] = (char)ch;
-    (*len)++;
-}
-
-int check_game_mode(char *str) {
-    if (str[0] == EASY_STR) return EASY;
-    if (str[0] == MEDIUM_STR) return MEDIUM;
-    if (str[0] == HARD_STR) return HARD;
+int check_game_mode(const char *str) {
+    if (str[0] == EASY_STR || str[0] == MEDIUM_STR || str[0] == HARD_STR) return SUCCESS;
     return ERROR;
 }
 
-int welcome(char *username, int *game_mode) {
+void valid_game_mode(char *game_mode_str, int *game_mode) {
+    int error_code = input(game_mode_str);
+
+    while (error_code || check_game_mode(game_mode_str) == ERROR) {
+        logcat(warning, "The user entered non-valid game_mode: %s", game_mode_str);
+        print_try_again_welcome();
+        error_code = input(game_mode_str);
+    }
+
+    if (game_mode_str[0] == EASY_STR) *game_mode = EASY;
+    if (game_mode_str[0] == MEDIUM_STR) *game_mode = MEDIUM;
+    if (game_mode_str[0] == HARD_STR) *game_mode = HARD;
+}
+
+void welcome(char *username, int *game_mode) {
     int error_code;
-    char *game_mode_str;
+    char game_mode_str[255];
     print_welcome();
     logcat(info, "The user was greeted");
     enter_username();
-    error_code = (username);
-    if (error_code) {
+    error_code = input(username);
+
+    while (error_code) {
         logcat(warning, "The user entered non-valid username: [%s]", username);
-        return ERROR;
+        print_try_again_welcome();
+        error_code = input(username);
     }
-    
-    logcat(warning, "The user entered valid username: [%s]", username);
+
+    logcat(info, "The user entered valid username: [%s]", username);
 
     enter_game_mode();
-    *game_mode = input(game_mode_str);
+    valid_game_mode(game_mode_str, game_mode);
 
-    if (*game_mode) {
-        logcat(warning, "The user entered non-valid game_mode: %d", *game_mode);
-        return ERROR;
-    }
-    
-    logcat(warning, "The user entered valid game_mode: %d", *game_mode);
-
-    return SUCCESS;
+    logcat(info, "The user entered valid game_mode: %d", *game_mode);
 }

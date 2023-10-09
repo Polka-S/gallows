@@ -1,7 +1,6 @@
 #ifndef WELCOME_H
 #define WELCOME_H
 
-
 #include "logger.h"
 
 #define SUCCESS 0
@@ -15,6 +14,6 @@
 #define MEDIUM_STR '2'
 #define HARD_STR '3'
 
-int welcome(char *username, int *game_mode);
+void welcome(char *username, int *game_mode);
 
-#endif // WELCOME_H
+#endif  // WELCOME_H

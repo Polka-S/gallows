@@ -9,9 +9,9 @@
 #define MEDIUM_LEN 10
 #define HARD_LEN 10
 
-char* random_easy_word();
-char* random_medium_word();
-char* random_hard_word();
+const char* random_easy_word();
+const char* random_medium_word();
+const char* random_hard_word();
 
 void start_random_generator();
-#endif //GALLOWS_WORD_BASE_H
+#endif  // GALLOWS_WORD_BASE_H

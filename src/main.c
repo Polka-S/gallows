@@ -1,8 +1,10 @@
-#include <stdio.h>
-#include "word_base.h"
+#include "logger.h"
+#include "manager.h"
 
 int main() {
-    printf("%s", random_easy_word());
+    log_init("logs.txt", debug);
+    run();
+    logclose();
 
     return 0;
 }

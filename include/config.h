@@ -2,6 +2,6 @@
 #define UNTITLED_CONFIG_H
 
 #define MAX_GALLOWS_ELEMS 8
-#define GALLOWS_STATES_FILE_NAME "../gallows_states.txt"
+#define GALLOWS_STATES_FILE_NAME "./static_files/gallows_states.txt"
 
-#endif //UNTITLED_CONFIG_H
+#endif  // UNTITLED_CONFIG_H

@@ -10,10 +10,15 @@
 #define TRUE 1
 #define FALSE 0
 
+#define EXIT -1
+#define NO_EXIT 1
+
 #include <stdio.h>
+#include <string.h>
 
 #include "user_interaction.h"
 
-void answer(const char *finish_word, char *user_word, int *count_attempt);
+int answer(const char *finish_word, char *user_word, int *count_attempt, char *mistakes);
+char to_lower(char ch);
 
 #endif  // USER_INTERACTION_H

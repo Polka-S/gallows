@@ -14,7 +14,7 @@ void enter_game_mode() {
     printf("Enter a number: ");
 }
 
-void print_try_again_welcome() { printf("I don't understand. Try again: "); }
+void print_try_it_again() { printf("I don't understand. Try again: "); }
 
 void add_char_to_str(char *str, int ch, int *len) {
     str[*len] = (char)ch;
@@ -45,7 +45,7 @@ void valid_game_mode(char *game_mode_str, int *game_mode) {
 
     while (error_code || check_game_mode(game_mode_str) == ERROR) {
         logcat(warning, "The user entered non-valid game_mode: %s", game_mode_str);
-        print_try_again_welcome();
+        print_try_it_again();
         error_code = input(game_mode_str);
     }
 
@@ -55,23 +55,27 @@ void valid_game_mode(char *game_mode_str, int *game_mode) {
 }
 
 void welcome(char *username, int *game_mode) {
-    int error_code;
     char game_mode_str[255];
-    print_welcome();
-    logcat(info, "The user was greeted");
-    enter_username();
-    error_code = input(username);
 
-    while (error_code) {
-        logcat(warning, "The user entered non-valid username: [%s]", username);
-        print_try_again_welcome();
+    if (*game_mode != EASY && *game_mode != MEDIUM && *game_mode != HARD) {
+        int error_code;
+        print_welcome();
+        logcat(info, "The user was greeted");
+        enter_username();
         error_code = input(username);
-    }
 
-    logcat(info, "The user entered valid username: [%s]", username);
+        while (error_code) {
+            logcat(warning, "The user entered non-valid username: [%s]", username);
+            print_try_it_again();
+            error_code = input(username);
+        }
+
+        logcat(info, "The user entered valid username: [%s]", username);
+    }
 
     enter_game_mode();
     valid_game_mode(game_mode_str, game_mode);
 
     logcat(info, "The user entered valid game_mode: %d", *game_mode);
+    printf("Thank you, %s! To exit the game, enter 'exit'", username);
 }

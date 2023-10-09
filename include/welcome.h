@@ -15,5 +15,7 @@
 #define HARD_STR '3'
 
 void welcome(char *username, int *game_mode);
+int input(char *str);
+void print_try_it_again();
 
 #endif  // WELCOME_H

@@ -30,6 +30,8 @@ int input(char *str) {
         if ((char)ch != ' ' && (char)ch != '\n') add_char_to_str(str, ch, &i);
     }
 
+    add_char_to_str(str, '\0', &i);
+
     if (i == 0) return ERROR;
 
     return SUCCESS;
